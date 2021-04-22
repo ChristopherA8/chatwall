@@ -7,6 +7,8 @@ BOOL enabled = NO;
 UIImageView *wallpaperView = nil;
 UIImage *wallpaper = nil;
 
+UIImageView *wallpaperViewTwo = nil;
+
 @interface CKTranscriptCollectionView : UIView
 @end
 
@@ -17,8 +19,29 @@ UIImage *wallpaper = nil;
 - (void)viewDidAppear:(BOOL)animated ;
 @end
 
+@interface CKViewController : UIViewController
+@end
+
+@interface CKRecipientSelectionController : CKViewController
+@end
+
+@interface CKComposeRecipientSelectionController : CKRecipientSelectionController
+@end
+
+@interface CKRecipientSelectionView
+@end
+
 @interface CKGradientReferenceView : UIView
 @end
+
+@interface CKMessagesController : UISplitViewController
+@end
+
+@interface CKNavigationController : UINavigationController
+@end
+
+// @interface UINavigationController : UIViewController
+// @end
 
 /**
   *
