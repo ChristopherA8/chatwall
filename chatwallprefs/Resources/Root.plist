@@ -34,7 +34,19 @@
 			<key>key</key>
 			<string>enabled</string>
 			<key>label</key>
-			<string>Enabled</string>
+			<string>Enabled in Chats</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.chr1s.chatwallprefs</string>
+			<key>key</key>
+			<string>everywhere</string>
+			<key>label</key>
+			<string>Enabled Everywhere</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -82,6 +94,66 @@
 			<real>1.0</real> <!-- The quality of the resulting JPEG image, expressed as a value from 0.0 to 1.0. The value 0.0 represents the maximum compression (or lowest quality) while the value 1.0 represents the least compression (or best quality). -->
 			<key>usesGIF</key> <!-- defaults to false - set this to true to write gif data instead of png data when a gif is chosen (overriden by usesJPEG) -->
 			<false/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Wallpaper Blur</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>0</real>
+			<key>defaults</key>
+			<string>com.chr1s.chatwallprefs</string>
+			<key>key</key>
+			<string>alpha</string>
+			<key>showValue</key>
+			<true/>
+			<key>isSegmented</key>
+			<false/>
+			<key>max</key>
+			<real>1</real>
+			<key>min</key>
+			<real>0</real>
+			<key>PostNotification</key>
+			<string>com.chr1s.chatwallprefs/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Other</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.chr1s.chatwallprefs</string>
+			<key>key</key>
+			<string>transparent</string>
+			<key>label</key>
+			<string>Hide Chat Box Background</string>
+			<key>PostNotification</key>
+			<string>com.chr1s.chatwallprefs/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.chr1s.chatwallprefs</string>
+			<key>key</key>
+			<string>appStrip</string>
+			<key>label</key>
+			<string>Hide App Strip</string>
+			<key>PostNotification</key>
+			<string>com.chr1s.chatwallprefs/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>

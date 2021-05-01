@@ -3,11 +3,18 @@
 HBPreferences* preferences = nil;
 
 BOOL enabled = NO;
+BOOL everywhere = NO;
+BOOL transparent = YES;
+BOOL hideAppStrip = YES;
 
 UIImageView *wallpaperView = nil;
 UIImage *wallpaper = nil;
 
 UIImageView *wallpaperViewTwo = nil;
+
+UIVisualEffectView *effectView;
+UIVisualEffectView *effectViewTwo;
+UIBlurEffect *blurEffect;
 
 @interface CKTranscriptCollectionView : UIView
 @end

@@ -28,22 +28,33 @@
 %end
 
 %hook CKComposeRecipientSelectionController
--(void)viewDidLoad {
-	%orig;
+// -(void)viewDidLoad {
+// 	%orig;
 
-	self.view.backgroundColor = UIColor.blackColor;
-	if (!wallpaperViewTwo) {
-		wallpaperViewTwo = [[UIImageView alloc] initWithFrame:[self.view bounds]];
-		[wallpaperViewTwo setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-		[wallpaperViewTwo setContentMode:UIViewContentModeScaleAspectFill];
-	}
+// 	self.view.backgroundColor = UIColor.blackColor;
+// 	if (!wallpaperViewTwo) {
+// 		wallpaperViewTwo = [[UIImageView alloc] initWithFrame:[self.view bounds]];
+// 		[wallpaperViewTwo setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+// 		[wallpaperViewTwo setContentMode:UIViewContentModeScaleAspectFill];
+// 	}
 
-	NSData *data = [preferences objectForKey:@"wallpaperImage"];
-	wallpaper = [UIImage imageWithData:data];
-	[wallpaperViewTwo setImage:wallpaper];
-	if (![wallpaperViewTwo isDescendantOfView:self.view]) [self.view insertSubview:wallpaperViewTwo atIndex:0];
-}
-// Don't do this
+// 	if (!effectView) {
+// 		if (@available(iOS 13, *)) {
+// 			blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleProminent];
+// 			effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+// 			[effectView setFrame:[self.view bounds]];
+// 			[effectView setAlpha:[preferences floatForKey:@"alpha"]];
+// 		}
+// 	}
+// 	[effectView setAlpha:[preferences floatForKey:@"alpha"]];
+
+// 	NSData *data = [preferences objectForKey:@"wallpaperImage"];
+// 	wallpaper = [UIImage imageWithData:data];
+// 	[wallpaperViewTwo setImage:wallpaper];
+// 	if (![wallpaperViewTwo isDescendantOfView:self.view]) [self.view insertSubview:wallpaperViewTwo atIndex:0];
+// 	if (![effectView isDescendantOfView:wallpaperViewTwo]) [wallpaperViewTwo insertSubview:effectView atIndex:0];
+// }
+// Don't do this :)
 -(void)viewDidAppear:(BOOL)animated {
 	%orig;
 	self.view.backgroundColor = UIColor.blackColor;
@@ -53,10 +64,21 @@
 		[wallpaperViewTwo setContentMode:UIViewContentModeScaleAspectFill];
 	}
 
+	if (!effectView) {
+		if (@available(iOS 13, *)) {
+			blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleProminent];
+			effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+			[effectView setFrame:[self.view bounds]];
+			[effectView setAlpha:[preferences floatForKey:@"alpha"]];
+		}
+	}
+	[effectView setAlpha:[preferences floatForKey:@"alpha"]];
+
 	NSData *data = [preferences objectForKey:@"wallpaperImage"];
 	wallpaper = [UIImage imageWithData:data];
 	[wallpaperViewTwo setImage:wallpaper];
 	if (![wallpaperViewTwo isDescendantOfView:self.view]) [self.view insertSubview:wallpaperViewTwo atIndex:0];
+	if (![effectView isDescendantOfView:wallpaperViewTwo]) [wallpaperViewTwo insertSubview:effectView atIndex:0];
 }
 %end
 
@@ -71,20 +93,83 @@
 		[wallpaperView setContentMode:UIViewContentModeScaleAspectFill];
 	}
 
+	if (!effectViewTwo) {
+		if (@available(iOS 13, *)) {
+			blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleProminent];
+			effectViewTwo = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+			[effectViewTwo setFrame:[self.view bounds]];
+			[effectViewTwo setAlpha:[preferences floatForKey:@"alpha"]];
+		}
+	}
+	[effectViewTwo setAlpha:[preferences floatForKey:@"alpha"]];
+
 	NSData *data = [preferences objectForKey:@"wallpaperImage"];
 	wallpaper = [UIImage imageWithData:data];
 	[wallpaperView setImage:wallpaper];
 	if (![wallpaperView isDescendantOfView:self.view]) [self.view insertSubview:wallpaperView atIndex:0];
+	if (![effectViewTwo isDescendantOfView:wallpaperView]) [wallpaperView insertSubview:effectViewTwo atIndex:0];
 	
 }
 %end
 
 %end // %group ChatWall
 
+@interface CKConversationListCollectionViewConversationCell : UIView
+@end
+
+%group WallpaperEverywhere
+%hook CKConversationListCollectionView
+-(void)setBackgroundColor:(UIColor *)color {
+	%orig(UIColor.clearColor);
+}
+%end
+%hook CKConversationListCollectionViewConversationCell
+-(void)setDelegate:(id)delegate {
+	%orig;
+	for (UIView *view in self.subviews) {
+		if ([view isKindOfClass:%c(_UISystemBackgroundView)]) {
+			view.hidden = YES;
+		}
+	}
+}
+%end
+%end
+
+@interface CKMessageEntryView : UIView
+@end
+
+%group TransparentMessageEntryView
+%hook CKMessageEntryView
+-(UIVisualEffectView *)backgroundView {
+	return nil;
+}
+-(UIVisualEffectView *)knockoutView {
+	return nil;
+}
+-(BOOL)shouldShowAppStrip {
+	if (hideAppStrip) {
+		return NO;
+	}
+	return %orig;;
+}
+%end
+%end
+
+
 %ctor {
 	preferences = [[HBPreferences alloc] initWithIdentifier:@"com.chr1s.chatwallprefs"];
 	[preferences registerBool:&enabled default:YES forKey:@"enabled"];
+	[preferences registerBool:&everywhere default:NO forKey:@"everywhere"];
+	[preferences registerBool:&transparent default:YES forKey:@"transparent"];
+	[preferences registerBool:&hideAppStrip default:YES forKey:@"appStrip"];
+
 	if (enabled) {
 		%init(ChatWall);
+		if (everywhere) {
+			%init(WallpaperEverywhere);
+		}
+		if (transparent) {
+			%init(TransparentMessageEntryView);
+		}
 	}
 }
