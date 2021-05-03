@@ -28,33 +28,6 @@
 %end
 
 %hook CKComposeRecipientSelectionController
-// -(void)viewDidLoad {
-// 	%orig;
-
-// 	self.view.backgroundColor = UIColor.blackColor;
-// 	if (!wallpaperViewTwo) {
-// 		wallpaperViewTwo = [[UIImageView alloc] initWithFrame:[self.view bounds]];
-// 		[wallpaperViewTwo setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-// 		[wallpaperViewTwo setContentMode:UIViewContentModeScaleAspectFill];
-// 	}
-
-// 	if (!effectView) {
-// 		if (@available(iOS 13, *)) {
-// 			blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleProminent];
-// 			effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-// 			[effectView setFrame:[self.view bounds]];
-// 			[effectView setAlpha:[preferences floatForKey:@"alpha"]];
-// 		}
-// 	}
-// 	[effectView setAlpha:[preferences floatForKey:@"alpha"]];
-
-// 	NSData *data = [preferences objectForKey:@"wallpaperImage"];
-// 	wallpaper = [UIImage imageWithData:data];
-// 	[wallpaperViewTwo setImage:wallpaper];
-// 	if (![wallpaperViewTwo isDescendantOfView:self.view]) [self.view insertSubview:wallpaperViewTwo atIndex:0];
-// 	if (![effectView isDescendantOfView:wallpaperViewTwo]) [wallpaperViewTwo insertSubview:effectView atIndex:0];
-// }
-// Don't do this :)
 -(void)viewDidAppear:(BOOL)animated {
 	%orig;
 	self.view.backgroundColor = UIColor.blackColor;
@@ -69,6 +42,7 @@
 			blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleProminent];
 			effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
 			[effectView setFrame:[self.view bounds]];
+			[effectView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 			[effectView setAlpha:[preferences floatForKey:@"alpha"]];
 		}
 	}
@@ -98,6 +72,7 @@
 			blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleProminent];
 			effectViewTwo = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
 			[effectViewTwo setFrame:[self.view bounds]];
+			[effectViewTwo setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
 			[effectViewTwo setAlpha:[preferences floatForKey:@"alpha"]];
 		}
 	}
@@ -150,11 +125,22 @@
 	if (hideAppStrip) {
 		return NO;
 	}
-	return %orig;;
+	return %orig;
 }
 %end
 %end
 
+/* @interface CKAggregateAcknowledgmentBalloonView : UIView {
+	UIImageView *_backgroundView;
+}
+@end
+
+%hook CKAggregateAcknowledgmentBalloonView
+-(id)initWithFrame:(CGRect)frame {
+	MSHookIvar<UIImageView *>(self, "_backgroundView") = nil;
+	return %orig;
+}
+%end */
 
 %ctor {
 	preferences = [[HBPreferences alloc] initWithIdentifier:@"com.chr1s.chatwallprefs"];
