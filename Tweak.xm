@@ -130,16 +130,34 @@
 %end
 %end
 
-/* @interface CKAggregateAcknowledgmentBalloonView : UIView {
-	UIImageView *_backgroundView;
-}
+// For screenshots
+/* %group screenshots
+@interface CKLabel : UILabel
 @end
 
-%hook CKAggregateAcknowledgmentBalloonView
--(id)initWithFrame:(CGRect)frame {
-	MSHookIvar<UIImageView *>(self, "_backgroundView") = nil;
-	return %orig;
+%hook CKLabel
+-(void)setText:(NSString *)text {
+	%orig(@"Cool Person");
 }
+%end
+
+@interface CNAvatarView : UIView
+@property (nonatomic, copy, readwrite) UIImageView *imageView;
+@end
+
+@interface CKAvatarView : CNAvatarView
+@end
+
+%hook CKAvatarView
+-(void)setImage:(UIImage *)image state:(NSInteger)state {
+	// UIImage *blurredImage = [image blurredImageWithImage:image inputRadius:2.0f];
+	%orig;
+	if (@available(iOS 13, *)) {
+		UIImage *faceImage = [UIImage systemImageNamed:@"person.circle"];
+		%orig(faceImage, state);
+	}
+}
+%end
 %end */
 
 %ctor {
@@ -150,6 +168,7 @@
 	[preferences registerBool:&hideAppStrip default:YES forKey:@"appStrip"];
 
 	if (enabled) {
+		// %init(screenshots);
 		%init(ChatWall);
 		if (everywhere) {
 			%init(WallpaperEverywhere);
