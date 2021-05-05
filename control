@@ -1,6 +1,6 @@
 Package: com.chr1s.chatwall
 Name: ChatWall Beta
-Version: 1.0.3
+Version: 1.0.4
 Architecture: iphoneos-arm
 Description: Custom wallpapers for iMessage
 Icon: https://chr1s.dev/assets/chatwallRounded.png

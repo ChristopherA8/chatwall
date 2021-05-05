@@ -8,7 +8,7 @@ include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = ChatWall
 
-ChatWall_FILES = Tweak.xm
+ChatWall_FILES = $(wildcard *.xm *.m)
 $(TWEAK_NAME)_LIBRARIES = imagepicker
 $(TWEAK_NAME)_EXTRA_FRAMEWORKS += Cephei
 ChatWall_CFLAGS = -fobjc-arc

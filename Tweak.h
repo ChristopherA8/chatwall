@@ -8,6 +8,8 @@ BOOL everywhere = NO;
 BOOL transparent = YES;
 BOOL hideAppStrip = YES;
 
+NSInteger wallpaperLocation = 2;
+
 UIImageView *wallpaperView = nil;
 UIImage *wallpaper = nil;
 

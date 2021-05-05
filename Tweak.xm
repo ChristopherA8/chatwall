@@ -1,7 +1,6 @@
 #include "Tweak.h"
 
-%group ChatWall
-
+%group InChatWallpaper
 %hook CKTranscriptCollectionViewController
 -(void)viewDidLoad {
 	%orig;
@@ -11,6 +10,9 @@
 	self.collectionView.backgroundColor = UIColor.clearColor;
 }
 %end
+%end
+
+%group ChatWall
 
 %hook CKGradientReferenceView
 -(void)setFrame:(CGRect)arg1 {
@@ -39,7 +41,7 @@
 
 	if (!effectView) {
 		if (@available(iOS 13, *)) {
-			blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleProminent];
+			blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
 			effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
 			[effectView setFrame:[self.view bounds]];
 			[effectView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
@@ -69,7 +71,7 @@
 
 	if (!effectViewTwo) {
 		if (@available(iOS 13, *)) {
-			blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleProminent];
+			blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
 			effectViewTwo = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
 			[effectViewTwo setFrame:[self.view bounds]];
 			[effectViewTwo setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
@@ -92,7 +94,7 @@
 @interface CKConversationListCollectionViewConversationCell : UIView
 @end
 
-%group WallpaperEverywhere
+%group convoListWallpaper
 %hook CKConversationListCollectionView
 -(void)setBackgroundColor:(UIColor *)color {
 	%orig(UIColor.clearColor);
@@ -166,12 +168,15 @@
 	[preferences registerBool:&everywhere default:NO forKey:@"everywhere"];
 	[preferences registerBool:&transparent default:YES forKey:@"transparent"];
 	[preferences registerBool:&hideAppStrip default:YES forKey:@"appStrip"];
+	[preferences registerInteger:&wallpaperLocation default:0 forKey:@"wallpaperLocation"];
 
 	if (enabled) {
-		// %init(screenshots);
 		%init(ChatWall);
-		if (everywhere) {
-			%init(WallpaperEverywhere);
+		if (wallpaperLocation == 0 || wallpaperLocation == 2) {
+			%init(convoListWallpaper);
+		}
+		if (wallpaperLocation == 0 || wallpaperLocation == 1) {
+			%init(InChatWallpaper);
 		}
 		if (transparent) {
 			%init(TransparentMessageEntryView);

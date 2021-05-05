@@ -5,28 +5,18 @@
 	<key>items</key>
 	<array>
 		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>headerCellClass</key>
-			<string>HBPackageNameHeaderCell</string>
-			<key>packageIdentifier</key>
-			<string>com.chr1s.chatwall</string>
-			<key>titleColor</key>
-			<string>#0086bf</string>
-			<key>condensed</key>
-			<false/>
-			<key>icon</key>
-			<string>icon@3x.png</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
+			<key>cellClass</key>
+			<string>KRTwitterCell</string>
 			<key>label</key>
-			<string>Enable Tweak</string>
+			<string>Chr1s</string>
+			<key>accountName</key>
+			<string>chr1sdev</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
+			<key>cellClass</key>
+			<string>CAWSwitchCell</string>
 			<key>default</key>
 			<true/>
 			<key>defaults</key>
@@ -34,40 +24,39 @@
 			<key>key</key>
 			<string>enabled</string>
 			<key>label</key>
-			<string>Enabled in Chats</string>
+			<string>Enable</string>
 		</dict>
 		<dict>
 			<key>cell</key>
-			<string>PSSwitchCell</string>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Wallpaper Location</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.chr1s.chatwallprefs/ReloadPrefs</string>
+			<key>cell</key>
+			<string>PSSegmentCell</string>
 			<key>default</key>
-			<false/>
+			<integer>0</integer>
 			<key>defaults</key>
 			<string>com.chr1s.chatwallprefs</string>
 			<key>key</key>
-			<string>everywhere</string>
+			<string>wallpaperLocation</string>
 			<key>label</key>
-			<string>Enabled Everywhere</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSButtonCell</string>
-			<key>action</key>
-			<string>respring</string>
-			<key>confirmation</key>
-				<dict>
-					<key>prompt</key>
-					<string>Are you sure?</string>
-					<key>title</key>
-					<string>Respring</string>
-					<key>okTitle</key>
-					<string>Respring</string>
-					<key>cancelTitle</key>
-					<string>Cancel</string>
-				</dict>
-			<key>isDestructive</key>
-			<true/>
-			<key>label</key>
-			<string>Respring</string>
+			<string>Wallpaper Location</string>
+			<key>validTitles</key>
+			<array>
+				<string>Both</string>
+				<string>In Chats</string>
+				<string>People List</string>
+			</array>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+			</array>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -130,6 +119,8 @@
 		<dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
+			<key>cellClass</key>
+			<string>CAWSwitchCell</string>
 			<key>default</key>
 			<true/>
 			<key>defaults</key>
@@ -144,6 +135,8 @@
 		<dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
+			<key>cellClass</key>
+			<string>CAWSwitchCell</string>
 			<key>default</key>
 			<true/>
 			<key>defaults</key>
@@ -159,15 +152,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string></string>
-		</dict>
-		<dict>
-			<key>cellClass</key>
-			<string>KRTwitterCell</string>
-			<key>label</key>
-			<string>Chr1s</string>
-			<key>accountName</key>
-			<string>chr1sdev</string>
+			<string>Links</string>
 		</dict>
 		<dict>
 			<key>cellClass</key>
@@ -186,6 +171,14 @@
 			<string>PayPal</string>
 			<key>action</key>
 			<string>paypal</string>
+		</dict>
+		<dict>
+			<key>cellClass</key>
+			<string>HBLinkTableCell</string>
+			<key>label</key>
+			<string>Source Code</string>
+			<key>action</key>
+			<string>sourceCode</string>
 		</dict>
 	</array>
 	<key>title</key>
