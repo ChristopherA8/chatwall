@@ -64,3 +64,6 @@ UIBlurEffect *blurEffect;
 @property (assign,nonatomic) UIView* referenceView;
 -(void)didMoveToWindow;
 @end
+
+@interface CKAggregateAcknowledgmentGradientBalloonView : UIView
+@end
