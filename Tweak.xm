@@ -10,6 +10,13 @@
 	self.collectionView.backgroundColor = UIColor.clearColor;
 }
 %end
+
+%hook CKAggregateAcknowledgmentGradientBalloonView
+- (void)prepareForDisplay {
+	%orig;
+	self.subviews[0].hidden = YES;
+}
+%end
 %end
 
 %group ChatWall
