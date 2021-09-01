@@ -4,10 +4,12 @@
 %hook CKTranscriptCollectionViewController
 -(void)viewDidLoad {
 	%orig;
-	// Remove square black mask around message bubbles
-	self.shouldUseOpaqueMask = NO;
 	// Remove black background
 	self.collectionView.backgroundColor = UIColor.clearColor;
+}
+- (BOOL)shouldUseOpaqueMask {
+	// Remove square black mask around message bubbles
+	return NO;
 }
 %end
 
